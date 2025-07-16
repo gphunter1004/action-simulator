@@ -17,11 +17,8 @@ func HandleInstantActions(client paho.Client, msg *models.InstantActionsMessage)
 			if state.AgvState.CancelOrderCycle != nil {
 				state.AgvState.CancelOrderCycle()
 			}
-			state.AgvState.CurrentOrder = nil
 			state.AgvState.ActionStatus = "FAILED"
 			state.AgvState.CancelOrderCycle = nil
-			state.AgvState.LastNodeId = ""
-			state.AgvState.LastNodeSequenceId = 0
 			state.AgvState.Unlock()
 
 		case "initPosition":
