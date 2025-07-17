@@ -9,7 +9,9 @@ import (
 type Float64 float64
 
 func (f Float64) MarshalJSON() ([]byte, error) {
-	return json.Marshal(strconv.FormatFloat(float64(f), 'f', 1, 64))
+	// 항상 소수점 한 자리까지 표시 (0이면 0.0으로)
+	formatted := strconv.FormatFloat(float64(f), 'f', 1, 64)
+	return []byte(formatted), nil
 }
 
 func (f *Float64) UnmarshalJSON(data []byte) error {
