@@ -79,13 +79,21 @@ func PublishRejectedState(client paho.Client, rejectedOrder *models.OrderMessage
 		LastNodeSequenceID: 0,
 		NodeStates:         []models.NodeState{},
 		EdgeStates:         []models.EdgeState{},
-		Velocity:           &models.Velocity{Vx: 0.0, Vy: 0.0, Omega: 0.0},
-		Driving:            false,
-		Paused:             false,
-		OperatingMode:      "AUTOMATIC",
-		BatteryState:       models.BatteryState{BatteryCharge: 60.0, Charging: false},
-		Information:        []interface{}{},
-		SafetyState:        models.SafetyState{EStop: "NONE", FieldViolation: false},
+		Velocity: &models.Velocity{
+			Vx:    models.Float64(0.0),
+			Vy:    models.Float64(0.0),
+			Omega: models.Float64(0.0),
+		},
+		Driving:               false,
+		Paused:                false,
+		OperatingMode:         "AUTOMATIC",
+		DistanceSinceLastNode: models.Float64(0.0),
+		BatteryState: models.BatteryState{
+			BatteryCharge: models.Float64(60.0),
+			Charging:      false,
+		},
+		Information: []interface{}{},
+		SafetyState: models.SafetyState{EStop: "NONE", FieldViolation: false},
 	}
 
 	payload, err := json.Marshal(stateMsg)

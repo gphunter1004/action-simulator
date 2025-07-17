@@ -27,15 +27,23 @@ func HandleInstantActions(client paho.Client, msg *models.InstantActionsMessage)
 				if param.Key == "pose" {
 					if pose, ok := param.Value.(map[string]interface{}); ok {
 						state.AgvState.Lock()
-						state.AgvState.Position.X, _ = pose["x"].(float64)
-						state.AgvState.Position.Y, _ = pose["y"].(float64)
-						state.AgvState.Position.Theta, _ = pose["theta"].(float64)
-						state.AgvState.Position.MapID, _ = pose["mapId"].(string)
+						if x, ok := pose["x"].(float64); ok {
+							state.AgvState.Position.X = models.Float64(x)
+						}
+						if y, ok := pose["y"].(float64); ok {
+							state.AgvState.Position.Y = models.Float64(y)
+						}
+						if theta, ok := pose["theta"].(float64); ok {
+							state.AgvState.Position.Theta = models.Float64(theta)
+						}
+						if mapId, ok := pose["mapId"].(string); ok {
+							state.AgvState.Position.MapID = mapId
+						}
 						state.AgvState.Position.PositionInitialized = true
-						state.AgvState.Position.LocalizationScore = 1.0
+						state.AgvState.Position.LocalizationScore = models.Float64(1.0)
 						state.AgvState.Unlock()
-						log.Printf("위치 초기화 완료: X=%.2f, Y=%.2f, Theta=%.2f",
-							state.AgvState.Position.X, state.AgvState.Position.Y, state.AgvState.Position.Theta)
+						log.Printf("위치 초기화 완료: X=%.1f, Y=%.1f, Theta=%.1f",
+							float64(state.AgvState.Position.X), float64(state.AgvState.Position.Y), float64(state.AgvState.Position.Theta))
 					}
 				}
 			}

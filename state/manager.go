@@ -39,10 +39,10 @@ var (
 		ActionStatus: "FINISHED",
 		Position: &models.AGVPosition{
 			PositionInitialized: false,
-			LocalizationScore:   0.0,
-			X:                   0.0,
-			Y:                   0.0,
-			Theta:               0.0,
+			LocalizationScore:   models.Float64(0.0),
+			X:                   models.Float64(0.0),
+			Y:                   models.Float64(0.0),
+			Theta:               models.Float64(0.0),
 			MapID:               "",
 		},
 	}

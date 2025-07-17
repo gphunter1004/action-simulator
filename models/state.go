@@ -1,20 +1,20 @@
 package models
 
 type AGVPosition struct {
-	X                   float64 `json:"x"`
-	Y                   float64 `json:"y"`
-	Theta               float64 `json:"theta"`
+	X                   Float64 `json:"x"`
+	Y                   Float64 `json:"y"`
+	Theta               Float64 `json:"theta"`
 	MapID               string  `json:"mapId"`
 	MapDescription      string  `json:"mapDescription,omitempty"`
 	PositionInitialized bool    `json:"positionInitialized"`
-	LocalizationScore   float64 `json:"localizationScore"`
-	DeviationRange      float64 `json:"deviationRange,omitempty"`
+	LocalizationScore   Float64 `json:"localizationScore"`
+	DeviationRange      Float64 `json:"deviationRange,omitempty"`
 }
 
 type Velocity struct {
-	Vx    float64 `json:"vx"`
-	Vy    float64 `json:"vy"`
-	Omega float64 `json:"omega"`
+	Vx    Float64 `json:"vx"`
+	Vy    Float64 `json:"vy"`
+	Omega Float64 `json:"omega"`
 }
 
 type NodeState struct {
@@ -42,11 +42,11 @@ type ActionState struct {
 }
 
 type BatteryState struct {
-	BatteryCharge  float64 `json:"batteryCharge"`
-	BatteryVoltage float64 `json:"batteryVoltage,omitempty"`
-	BatteryHealth  float64 `json:"batteryHealth,omitempty"`
+	BatteryCharge  Float64 `json:"batteryCharge"`
+	BatteryVoltage Float64 `json:"batteryVoltage,omitempty"`
+	BatteryHealth  Float64 `json:"batteryHealth,omitempty"`
 	Charging       bool    `json:"charging"`
-	Reach          float64 `json:"reach,omitempty"`
+	Reach          Float64 `json:"reach,omitempty"`
 }
 
 type ErrorReference struct {
@@ -84,7 +84,7 @@ type StateMessage struct {
 	Driving               bool          `json:"driving"`
 	Paused                bool          `json:"paused"`
 	NewBaseRequest        bool          `json:"newBaseRequest"`
-	DistanceSinceLastNode float64       `json:"distanceSinceLastNode"`
+	DistanceSinceLastNode Float64       `json:"distanceSinceLastNode"`
 	OperatingMode         string        `json:"operatingMode"`
 	ActionStates          []ActionState `json:"actionStates"`
 	BatteryState          BatteryState  `json:"batteryState"`

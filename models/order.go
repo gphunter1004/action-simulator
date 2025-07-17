@@ -1,11 +1,32 @@
 package models
 
+import (
+	"encoding/json"
+	"strconv"
+)
+
+// Float64 is a custom type that ensures JSON marshaling with decimal point
+type Float64 float64
+
+func (f Float64) MarshalJSON() ([]byte, error) {
+	return json.Marshal(strconv.FormatFloat(float64(f), 'f', 1, 64))
+}
+
+func (f *Float64) UnmarshalJSON(data []byte) error {
+	var v float64
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	*f = Float64(v)
+	return nil
+}
+
 type NodePosition struct {
-	X                     float64 `json:"x"`
-	Y                     float64 `json:"y"`
-	Theta                 float64 `json:"theta,omitempty"`
-	AllowedDeviationXY    float64 `json:"allowedDeviationXY,omitempty"`
-	AllowedDeviationTheta float64 `json:"allowedDeviationTheta,omitempty"`
+	X                     Float64 `json:"x"`
+	Y                     Float64 `json:"y"`
+	Theta                 Float64 `json:"theta,omitempty"`
+	AllowedDeviationXY    Float64 `json:"allowedDeviationXY,omitempty"`
+	AllowedDeviationTheta Float64 `json:"allowedDeviationTheta,omitempty"`
 	MapID                 string  `json:"mapId"`
 	MapDescription        string  `json:"mapDescription,omitempty"`
 }
@@ -20,20 +41,20 @@ type Node struct {
 }
 
 type ControlPoint struct {
-	X      float64 `json:"x"`
-	Y      float64 `json:"y"`
-	Weight float64 `json:"weight,omitempty"`
+	X      Float64 `json:"x"`
+	Y      Float64 `json:"y"`
+	Weight Float64 `json:"weight,omitempty"`
 }
 
 type Trajectory struct {
 	Degree        int            `json:"degree"`
-	KnotVector    []float64      `json:"knotVector"`
+	KnotVector    []Float64      `json:"knotVector"`
 	ControlPoints []ControlPoint `json:"controlPoints"`
 }
 
 type Corridor struct {
-	LeftWidth        float64 `json:"leftWidth"`
-	RightWidth       float64 `json:"rightWidth"`
+	LeftWidth        Float64 `json:"leftWidth"`
+	RightWidth       Float64 `json:"rightWidth"`
 	CorridorRefPoint string  `json:"corridorRefPoint,omitempty"`
 }
 
@@ -44,15 +65,15 @@ type Edge struct {
 	Released         bool        `json:"released"`
 	StartNodeID      string      `json:"startNodeId"`
 	EndNodeID        string      `json:"endNodeId"`
-	MaxSpeed         float64     `json:"maxSpeed,omitempty"`
-	MaxHeight        float64     `json:"maxHeight,omitempty"`
-	MinHeight        float64     `json:"minHeight,omitempty"`
-	Orientation      float64     `json:"orientation,omitempty"`
+	MaxSpeed         Float64     `json:"maxSpeed,omitempty"`
+	MaxHeight        Float64     `json:"maxHeight,omitempty"`
+	MinHeight        Float64     `json:"minHeight,omitempty"`
+	Orientation      Float64     `json:"orientation,omitempty"`
 	OrientationType  string      `json:"orientationType,omitempty"`
 	Direction        string      `json:"direction,omitempty"`
 	RotationAllowed  *bool       `json:"rotationAllowed,omitempty"`
-	MaxRotationSpeed float64     `json:"maxRotationSpeed,omitempty"`
-	Length           float64     `json:"length,omitempty"`
+	MaxRotationSpeed Float64     `json:"maxRotationSpeed,omitempty"`
+	Length           Float64     `json:"length,omitempty"`
 	Trajectory       *Trajectory `json:"trajectory,omitempty"`
 	Corridor         *Corridor   `json:"corridor,omitempty"`
 	Actions          []Action    `json:"actions"`

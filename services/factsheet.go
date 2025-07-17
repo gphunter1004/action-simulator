@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"mqtt_agv_simulator/models"
-	"mqtt_agv_simulator/state" // mqtt 패키지 대신 state 패키지를 import 합니다.
+	"mqtt_agv_simulator/state"
 	"sync/atomic"
 	"time"
 
@@ -19,29 +19,32 @@ func InitFactsheet() {
 	factsheetData = models.Factsheet{
 		Version:      "2.0.0",
 		Manufacturer: "Roboligent",
-		SerialNumber: state.AgvSerialNumber, // state.AgvSerialNumber를 사용하도록 수정
+		SerialNumber: state.AgvSerialNumber,
 		TypeSpecification: models.TypeSpecification{
 			SeriesName:        "DEX-Series",
 			SeriesDescription: "Differential Drive AGV for general purpose",
 			AGVKinematic:      "DIFF",
 			AGVClass:          "CARRIER",
-			MaxLoadMass:       200.0,
+			MaxLoadMass:       models.Float64(200.0),
 			LocalizationTypes: []string{"NATURAL", "GRID"},
 			NavigationTypes:   []string{"AUTONOMOUS"},
 		},
 		PhysicalParameters: models.PhysicalParameters{
-			SpeedMin:        0.0,
-			SpeedMax:        2.0,
-			AccelerationMax: 1.0,
-			DecelerationMax: 1.5,
-			HeightMax:       0.5,
-			Width:           0.6,
-			Length:          0.8,
+			SpeedMin:        models.Float64(0.0),
+			SpeedMax:        models.Float64(2.0),
+			AccelerationMax: models.Float64(1.0),
+			DecelerationMax: models.Float64(1.5),
+			HeightMax:       models.Float64(0.5),
+			Width:           models.Float64(0.6),
+			Length:          models.Float64(0.8),
 		},
 		ProtocolLimits: models.ProtocolLimits{
 			MaxStringLens: models.MaxStringLens{MsgLen: 65535},
 			MaxArrayLens:  models.MaxArrayLens{OrderNodes: 100, OrderEdges: 100},
-			Timing:        models.Timing{MinOrderInterval: 0.2, MinStateInterval: 0.2},
+			Timing: models.Timing{
+				MinOrderInterval: models.Float64(0.2),
+				MinStateInterval: models.Float64(0.2),
+			},
 		},
 		ProtocolFeatures: models.ProtocolFeatures{
 			OptionalParameters: []models.OptionalParameter{
@@ -58,8 +61,10 @@ func InitFactsheet() {
 				{
 					Set: "default",
 					PolygonPoints: []models.PolygonPoint{
-						{X: 0.4, Y: 0.3}, {X: -0.4, Y: 0.3},
-						{X: -0.4, Y: -0.3}, {X: 0.4, Y: -0.3},
+						{X: models.Float64(0.4), Y: models.Float64(0.3)},
+						{X: models.Float64(-0.4), Y: models.Float64(0.3)},
+						{X: models.Float64(-0.4), Y: models.Float64(-0.3)},
+						{X: models.Float64(0.4), Y: models.Float64(-0.3)},
 					},
 				},
 			},

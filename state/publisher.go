@@ -57,7 +57,7 @@ func PublishCurrentState(client paho.Client) {
 		Timestamp:          time.Now().UTC().Format(time.RFC3339),
 		Version:            "2.0.0",
 		Manufacturer:       "Roboligent",
-		SerialNumber:       AgvSerialNumber, // 같은 패키지 내의 상수 사용
+		SerialNumber:       AgvSerialNumber,
 		OrderID:            orderID,
 		OrderUpdateID:      orderUpdateID,
 		LastNodeID:         AgvState.LastNodeId,
@@ -65,15 +65,24 @@ func PublishCurrentState(client paho.Client) {
 		NodeStates:         nodeStates,
 		EdgeStates:         edgeStates,
 		AGVPosition:        AgvState.Position,
-		Velocity:           &models.Velocity{Vx: 0.0, Vy: 0.0, Omega: 0.0},
-		Driving:            AgvState.ActionStatus == "RUNNING",
-		Paused:             false,
-		OperatingMode:      "AUTOMATIC",
-		ActionStates:       actionStates,
-		BatteryState:       models.BatteryState{BatteryCharge: 60.0, BatteryVoltage: 40.0, Charging: false},
-		Errors:             []models.Error{},
-		Information:        []interface{}{},
-		SafetyState:        models.SafetyState{EStop: "NONE", FieldViolation: false},
+		Velocity: &models.Velocity{
+			Vx:    models.Float64(0.0),
+			Vy:    models.Float64(0.0),
+			Omega: models.Float64(0.0),
+		},
+		Driving:               AgvState.ActionStatus == "RUNNING",
+		Paused:                false,
+		OperatingMode:         "AUTOMATIC",
+		ActionStates:          actionStates,
+		DistanceSinceLastNode: models.Float64(0.0),
+		BatteryState: models.BatteryState{
+			BatteryCharge:  models.Float64(60.0),
+			BatteryVoltage: models.Float64(40.0),
+			Charging:       false,
+		},
+		Errors:      []models.Error{},
+		Information: []interface{}{},
+		SafetyState: models.SafetyState{EStop: "NONE", FieldViolation: false},
 	}
 
 	payload, err := json.Marshal(stateMsg)
@@ -82,7 +91,7 @@ func PublishCurrentState(client paho.Client) {
 		return
 	}
 
-	topic := fmt.Sprintf("meili/v2/Roboligent/%s/state", AgvSerialNumber) // 같은 패키지 내의 상수 사용
+	topic := fmt.Sprintf("meili/v2/Roboligent/%s/state", AgvSerialNumber)
 	_ = client.Publish(topic, 0, false, payload)
 	log.Printf("State 발행: OrderID=%s, ActionStatus=%s, PosInit=%v", orderID, AgvState.ActionStatus, AgvState.Position.PositionInitialized)
 }

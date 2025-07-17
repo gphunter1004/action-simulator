@@ -5,20 +5,20 @@ type TypeSpecification struct {
 	SeriesDescription string   `json:"seriesDescription,omitempty"`
 	AGVKinematic      string   `json:"agvKinematic"`
 	AGVClass          string   `json:"agvClass"`
-	MaxLoadMass       float64  `json:"maxLoadMass"`
+	MaxLoadMass       Float64  `json:"maxLoadMass"`
 	LocalizationTypes []string `json:"localizationTypes"`
 	NavigationTypes   []string `json:"navigationTypes"`
 }
 
 type PhysicalParameters struct {
-	SpeedMin        float64 `json:"speedMin"`
-	SpeedMax        float64 `json:"speedMax"`
-	AccelerationMax float64 `json:"accelerationMax"`
-	DecelerationMax float64 `json:"decelerationMax"`
-	HeightMin       float64 `json:"heightMin,omitempty"`
-	HeightMax       float64 `json:"heightMax"`
-	Width           float64 `json:"width"`
-	Length          float64 `json:"length"`
+	SpeedMin        Float64 `json:"speedMin"`
+	SpeedMax        Float64 `json:"speedMax"`
+	AccelerationMax Float64 `json:"accelerationMax"`
+	DecelerationMax Float64 `json:"decelerationMax"`
+	HeightMin       Float64 `json:"heightMin,omitempty"`
+	HeightMax       Float64 `json:"heightMax"`
+	Width           Float64 `json:"width"`
+	Length          Float64 `json:"length"`
 }
 
 type MaxStringLens struct {
@@ -51,10 +51,10 @@ type MaxArrayLens struct {
 }
 
 type Timing struct {
-	MinOrderInterval      float64 `json:"minOrderInterval"`
-	MinStateInterval      float64 `json:"minStateInterval"`
-	DefaultStateInterval  float64 `json:"defaultStateInterval,omitempty"`
-	VisualizationInterval float64 `json:"visualizationInterval,omitempty"`
+	MinOrderInterval      Float64 `json:"minOrderInterval"`
+	MinStateInterval      Float64 `json:"minStateInterval"`
+	DefaultStateInterval  Float64 `json:"defaultStateInterval,omitempty"`
+	VisualizationInterval Float64 `json:"visualizationInterval,omitempty"`
 }
 
 type ProtocolLimits struct {
@@ -91,8 +91,8 @@ type ProtocolFeatures struct {
 }
 
 type PolygonPoint struct {
-	X float64 `json:"x"`
-	Y float64 `json:"y"`
+	X Float64 `json:"x"`
+	Y Float64 `json:"y"`
 }
 
 type Envelope2D struct {
